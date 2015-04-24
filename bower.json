@@ -5,11 +5,14 @@
   "authors": [
     "Charles Thomas <charlesthomas100@gmail.com>"
   ],
+  "main": "./bin/www",
   "license": "MIT",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "public/libraries/",
     "test",
     "tests"
   ]

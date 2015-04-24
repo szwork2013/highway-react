@@ -12,6 +12,7 @@
     "express": "~4.11.1",
     "hbs": "~2.8.0",
     "less-middleware": "1.0.x",
+    "material-ui": "^0.7.4",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0"
   },
@@ -21,8 +22,11 @@
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.2.0",
     "gulp-less": "^3.0.3",
+    "gulp-notify": "^2.2.0",
     "gulp-sourcemaps": "^1.5.2",
+    "gulp-util": "^3.0.4",
     "react": "^0.13.2",
+    "react-tap-event-plugin": "^0.1.6",
     "reactify": "^1.1.0",
     "vinyl-source-stream": "^1.1.0"
   }
