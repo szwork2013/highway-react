@@ -1,0 +1,16 @@
+{
+  "name": "highway-react",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CharlesT100/highway-react",
+  "authors": [
+    "Charles Thomas <charlesthomas100@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
