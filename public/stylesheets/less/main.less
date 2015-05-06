@@ -3,6 +3,9 @@
 //Define a custom less file to override any variables defined in scaffolding.less
 @import "my-custom-overrides.less";
 
+//Import all the custom less files
+@import "footer.less";
+
 @import "node_modules/material-ui/src/less/components.less";
 
 body {
@@ -27,6 +30,86 @@ a {
 
 #main-container{
   width: 100%;
+  background: green;
+}
+
+//
+// Navigation
+//
+
+#navigation{
+  width: 100%;
+  height: 78px;
+  background: green;
+}
+
+//same height as the navigation div that holds it
+.mui-toolbar{
+  height: 78px;
+  background: white;
+}
+
+.left-nav {
   height: 100%;
-  background: red;
+  background: white; 
+  float: left;
+  padding-top: 20px;
+}
+
+.right-nav{
+  
+}
+
+.logo{
+  height:78px;
+  background: white;
+  text-align: center;
+  padding-top: 25px;
+}
+
+.mui-toolbar .mui-toolbar-group.mui-right:last-child {
+  background: white;
+  height: 78px;
+  width: 30%;
+  padding-top: 10px;
+}
+
+.mui-menu .mui-paper-container {
+  padding-top: 0px;
+  padding-bottom: 0px;  
+}
+
+
+//
+// Content Container
+//
+
+#content-container{
+  width: 80%;
+  margin: auto;
+  margin-top: 25px;
+  text-align: center;
+}
+
+#content-container-one{
+  width: 80%;
+  background: white;
+  margin: auto;
+  margin-top: 25px;
+}
+
+#content-container-two{
+  width: 80%;
+  margin: auto;
+  margin-top: 25px;
+  background: white;
+}
+
+
+#content-container-three{
+  width: 80%;
+  background: white;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }

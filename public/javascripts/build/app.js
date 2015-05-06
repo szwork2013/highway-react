@@ -22,7 +22,7 @@ React.render(
 );
 
 
-},{"./Main.jsx":249,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
+},{"./Main.jsx":252,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -28318,12 +28318,137 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":106}],249:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
+var React = require('react'),
+    mui = require('material-ui'),
+
+
+    Paper = mui.Paper,
+    RaisedButton = mui.RaisedButton,
+    FlatButton = mui.RaisedButton;
+    
+/** Declare all components here **/
+
+  var Content = React.createClass({displayName: "Content",
+
+  render: function() {
+    return (
+      React.createElement("div", {id: "content-container"}, 
+        React.createElement("div", {id: "content-container-one"}, 
+          React.createElement(Paper, {zDepth: 1}, 
+            React.createElement("p", null, " Content React Component 1"), 
+            React.createElement("p", null, " Content React Component 1"), 
+            React.createElement("p", null, " Content React Component 1"), 
+            React.createElement("p", null, " Content React Component 1"), 
+            React.createElement("p", null, " Content React Component 1")
+          )
+        ), 
+
+        React.createElement("div", {id: "content-container-two"}, 
+          React.createElement(Paper, {zDepth: 1}, 
+            React.createElement("p", null, " Content React Component 2"), 
+            React.createElement("p", null, " Content React Component 2"), 
+            React.createElement("p", null, " Content React Component 2"), 
+            React.createElement("p", null, " Content React Component 2"), 
+            React.createElement("p", null, " Content React Component 2")
+          )
+        ), 
+
+        React.createElement("div", {id: "content-container-three"}, 
+          React.createElement(Paper, {zDepth: 1}, 
+            React.createElement("p", null, " Content React Component 3"), 
+            React.createElement("p", null, " Content React Component 3"), 
+            React.createElement("p", null, " Content React Component 3"), 
+            React.createElement("p", null, " Content React Component 3"), 
+            React.createElement("p", null, " Content React Component 3")
+          )
+        )
+
+      )  
+    );
+  }
+
+});
+
+module.exports = Content;
+
+
+},{"material-ui":3,"react":248}],250:[function(require,module,exports){
+/** In this file, we create a React component which incorporates components provided by material-ui */
+var React = require('react');
+var mui = require('material-ui');
+
+
+var Footer = React.createClass({displayName: "Footer",
+
+  render: function() {
+    return (
+        React.createElement("div", {id: "footer"}, 
+        React.createElement("p", null, " This is the footer react component")
+
+
+      )
+    );
+  }
+});
+
+module.exports = Footer;
+
+
+},{"material-ui":3,"react":248}],251:[function(require,module,exports){
+var React = require('react'),
+    mui = require('material-ui'),
+    FlatButton = mui.FlatButton,
+    MenuItem = mui.MenuItem,
+    LeftNav = mui.LeftNav;
+
+   menuItems = [
+    { route: 'route1', text: ' Green' },
+    { route: 'route 2', text: 'Yellow' },
+    { route: 'route 3', text: 'Red' },
+    { route: 'route 4', text: 'Blue' }
+  ];
+
+
+var Hamburger = React.createClass({displayName: "Hamburger",
+
+  getInitialState: function() {
+    return {
+      isDocked: false
+    };
+  },
+
+  render: function() {
+    var header = React.createElement("div", {className: "logo", onClick: this._onHeaderClick}, " Account ");
+
+    return (
+      React.createElement("div", {className: "left-nav"}, 
+        React.createElement(FlatButton, {label: "x", onTouchTap: this._showLeftNavClick}), 
+        React.createElement(LeftNav, {ref: "dockedLeftNav", docked: this.state.isDocked, menuItems: menuItems, header: header}), 
+        React.createElement(LeftNav, {ref: "leftNav", docked: false, menuItems: menuItems, header: header})
+      )
+    );
+  },
+
+  _showLeftNavClick: function() {
+    this.refs.leftNav.toggle();
+  },
+
+});
+
+module.exports = Hamburger;
+
+
+},{"material-ui":3,"react":248}],252:[function(require,module,exports){
+/** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react');
 var mui = require('material-ui');
 
 /** Declare all components here **/
-/*
 var Navigation = require('./Navigation.jsx');
+var Content = require('./Content.jsx');
+var Footer = require('./Footer.jsx');
+
+/* 
 var Search = require('./Search.jsx');
 var UserProfile = require('./UserProfile.jsx');
 var UserFeed = require('./UserFeed.jsx');
@@ -28335,7 +28460,11 @@ var Main = React.createClass({displayName: "Main",
     return (
         React.createElement("div", {id: "main-container"}, 
           
-          React.createElement("p", null, " this is the main-container form react.js, boom! ")
+        React.createElement(Navigation, null), 
+        React.createElement(Content, null), 
+        React.createElement(Footer, null)
+        
+
 
       )
     );
@@ -28345,4 +28474,46 @@ var Main = React.createClass({displayName: "Main",
 module.exports = Main;
 
 
-},{"material-ui":3,"react":248}]},{},[1]);
+},{"./Content.jsx":249,"./Footer.jsx":250,"./Navigation.jsx":253,"material-ui":3,"react":248}],253:[function(require,module,exports){
+/** In this file, we create a React component which incorporates components provided by material-ui */
+var React = require('react'),
+    mui = require('material-ui'),
+
+    Toolbar = mui.Toolbar,
+    ToolbarGroup = mui.ToolbarGroup,
+    DropDownMenu = mui.DropDownMenu,
+    LeftNav = mui.LeftNav,
+    RightNav = mui.RightNav,
+    RaisedButton = mui.RaisedButton,
+    FlatButton = mui.RaisedButton;
+    
+/** Declare all components here **/
+var Hamburger = require('./Hamburger.jsx');
+
+  var Navigation = React.createClass({displayName: "Navigation",
+
+  render: function() {
+    return (
+        React.createElement("div", {id: "navigation"}, 
+          React.createElement(Toolbar, null, 
+           React.createElement(Hamburger, null), 
+            React.createElement(ToolbarGroup, {key: 0, float: "left"}, 
+            React.createElement("h1", null, " highway || ")
+          ), 
+
+          React.createElement(ToolbarGroup, {key: 1, float: "right"}, 
+            React.createElement(RaisedButton, {label: "sign up", primary: true, onTouchTap: this._handleTouchTap}), 
+            React.createElement(RaisedButton, {label: "log in", primary: true, onTouchTap: this._handleTouchTap})
+
+          )
+        )
+      )
+    );
+  }
+
+});
+
+module.exports = Navigation;
+
+
+},{"./Hamburger.jsx":251,"material-ui":3,"react":248}]},{},[1]);

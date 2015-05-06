@@ -3,8 +3,11 @@ var React = require('react');
 var mui = require('material-ui');
 
 /** Declare all components here **/
-/*
 var Navigation = require('./Navigation.jsx');
+var Content = require('./Content.jsx');
+var Footer = require('./Footer.jsx');
+
+/* 
 var Search = require('./Search.jsx');
 var UserProfile = require('./UserProfile.jsx');
 var UserFeed = require('./UserFeed.jsx');
@@ -16,7 +19,11 @@ var Main = React.createClass({
     return (
         <div id="main-container">
           
-          <p> this is the main-container form react.js, boom! </p>
+        < Navigation />
+        < Content />
+        < Footer />
+        
+
 
       </div>
     );
