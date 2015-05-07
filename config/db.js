@@ -6,7 +6,7 @@ var r = require('rethinkdb')
 
 
 // RethinkDB database settings. Defaults can be overridden using environment variables.
-var dbConfig = {
+var db = {
     host: process.env.RDB_HOST || 'localhost',
     port: process.env.RDB_PORT || 28015,
     db: process.env.RDB_DB || 'highway',
@@ -32,3 +32,5 @@ r.connect({ host: 'localhost', port: 28015}, function (err, conn) {
     });
     */
 });
+
+module.exports = db;
