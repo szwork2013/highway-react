@@ -16,3 +16,5 @@
 
 - add google analytics
 
+- redis session storage?
+

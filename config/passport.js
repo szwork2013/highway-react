@@ -1,7 +1,8 @@
  var passport = require('passport')
    , local = require('passport-local').Strategy
    , bcrypt = require ('bcrypt')
-   , db = require ('./config/db')
+   , db = require ('./database')
+   , secrets = require('./secrets')
    , util = require('util');
 
 

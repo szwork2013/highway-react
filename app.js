@@ -1,9 +1,12 @@
 var express = require('express')
   , path = require('path')
   , favicon = require('serve-favicon')
+  , flash = require('connect-flash')
   , logger = require('morgan')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
+  , passport = require('passport')
+  , session = require('express-session')
   , r = require('rethinkdb');
 
 var routes = require('./routes/index');
@@ -12,13 +15,11 @@ var users = require('./routes/users');
 var app = express();
 
 // db config
-var db = require('./config/db');
+var db = require('./config/database');
+db.setup();
 
-r.connect({ host: 'localhost', port: 28015}, function (err, conn) {
-    if (err) throw err;
-    console.log('OK, looks like RethinkDB is firing');
-});
-var passportConfig = require('./config/passport.js');
+// passport config
+var passport = require('./config/passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,15 +31,27 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+app.use(session({ secret: 'secret', 
+                  resave: false, 
+                  saveUninitialized: false, 
+                  cookie: {secure: true} 
+                }));
+
+/*
+app.use(passport.initialize);
+app.use(passport.session());
+app.use(flash());
+*/
+
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// setup the RethinkDB database
-// db.setup();
-
 app.use('/', routes);
-app.use('/users', users);
+// app.get('/users', routes.users);
+// app.get('/login', routes.login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

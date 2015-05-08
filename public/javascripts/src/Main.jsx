@@ -4,6 +4,8 @@ var mui = require('material-ui');
 
 /** Declare all components here **/
 var Navigation = require('./Navigation.jsx');
+var Login = require('./Login.jsx');
+var Signup = require('./Signup.jsx');
 var Content = require('./Content.jsx');
 var Footer = require('./Footer.jsx');
 
@@ -17,14 +19,12 @@ var Main = React.createClass({
 
   render: function() {
     return (
-        <div id="main-container">
-          
+      <div id="main-container"> 
         < Navigation />
+        < Signup />
+        < Login />
         < Content />
         < Footer />
-        
-
-
       </div>
     );
   }

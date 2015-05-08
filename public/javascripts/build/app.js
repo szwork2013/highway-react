@@ -22,7 +22,7 @@ React.render(
 );
 
 
-},{"./Main.jsx":252,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
+},{"./Main.jsx":253,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -28373,7 +28373,6 @@ module.exports = Content;
 
 
 },{"material-ui":3,"react":248}],250:[function(require,module,exports){
-/** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react');
 var mui = require('material-ui');
 
@@ -28439,12 +28438,51 @@ module.exports = Hamburger;
 
 
 },{"material-ui":3,"react":248}],252:[function(require,module,exports){
+var React = require('react');
+var mui = require('material-ui');
+
+
+var Login = React.createClass({displayName: "Login",
+
+  render: function() {
+    return (
+        React.createElement("div", {id: "login"}, 
+        React.createElement("p", null, " This is the LOGIN react component"), 
+
+        React.createElement("p", null, " You are logged in as: ", { }, " "), 
+
+        React.createElement("form", {action: "login", method: "post"}, 
+          React.createElement("div", null, 
+            React.createElement("label", {for: "username"}, "Email: ", { }, " "), 
+            React.createElement("input", {type: "text", name: "username", id: "username"})
+          ), 
+          
+          React.createElement("div", null, 
+            React.createElement("label", {for: "password"}, "Password:"), 
+            React.createElement("input", {type: "password", name: "password", id: "password"})
+          ), 
+        
+          React.createElement("div", null, 
+            React.createElement("input", {type: "submit", value: "Log in"})
+          )
+        )
+
+      )
+    );
+  }
+});
+
+module.exports = Login;
+
+},{"material-ui":3,"react":248}],253:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react');
 var mui = require('material-ui');
 
 /** Declare all components here **/
 var Navigation = require('./Navigation.jsx');
+var Login = require('./Login.jsx');
+var Signup = require('./Signup.jsx');
 var Content = require('./Content.jsx');
 var Footer = require('./Footer.jsx');
 
@@ -28458,14 +28496,12 @@ var Main = React.createClass({displayName: "Main",
 
   render: function() {
     return (
-        React.createElement("div", {id: "main-container"}, 
-          
+      React.createElement("div", {id: "main-container"}, 
         React.createElement(Navigation, null), 
+        React.createElement(Signup, null), 
+        React.createElement(Login, null), 
         React.createElement(Content, null), 
         React.createElement(Footer, null)
-        
-
-
       )
     );
   }
@@ -28474,7 +28510,7 @@ var Main = React.createClass({displayName: "Main",
 module.exports = Main;
 
 
-},{"./Content.jsx":249,"./Footer.jsx":250,"./Navigation.jsx":253,"material-ui":3,"react":248}],253:[function(require,module,exports){
+},{"./Content.jsx":249,"./Footer.jsx":250,"./Login.jsx":252,"./Navigation.jsx":254,"./Signup.jsx":255,"material-ui":3,"react":248}],254:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react'),
     mui = require('material-ui'),
@@ -28516,4 +28552,48 @@ var Hamburger = require('./Hamburger.jsx');
 module.exports = Navigation;
 
 
-},{"./Hamburger.jsx":251,"material-ui":3,"react":248}]},{},[1]);
+},{"./Hamburger.jsx":251,"material-ui":3,"react":248}],255:[function(require,module,exports){
+var React = require('react')
+  , mui = require('material-ui')
+  , TextField = mui.TextField;
+
+
+
+var Signup = React.createClass({displayName: "Signup",
+
+  render: function() {
+    return (
+        React.createElement("div", {id: "signup"}, 
+        React.createElement("p", null, " This is the SIGNUP react component"), 
+
+        React.createElement("form", {action: "login", method: "post"}, 
+          
+
+
+          React.createElement("div", null, 
+            React.createElement("label", {for: "username"}, "Email:"), 
+            React.createElement("input", {type: "text", name: "username", id: "username"})
+          ), 
+          
+          React.createElement("div", null, 
+            React.createElement("label", {for: "password"}, "Password:"), 
+            React.createElement("input", {type: "password", name: "password", id: "password"})
+          ), 
+        
+          React.createElement("div", null, 
+            React.createElement("input", {type: "submit", value: "Sign Up"})
+          )
+
+
+
+        )
+
+
+      )
+    );
+  }
+});
+
+module.exports = Signup;
+
+},{"material-ui":3,"react":248}]},{},[1]);
