@@ -28438,8 +28438,9 @@ module.exports = Hamburger;
 
 
 },{"material-ui":3,"react":248}],252:[function(require,module,exports){
-var React = require('react');
-var mui = require('material-ui');
+var React = require('react')
+  , mui = require('material-ui')
+  , TextField = mui.TextField;
 
 
 var Login = React.createClass({displayName: "Login",
@@ -28447,27 +28448,13 @@ var Login = React.createClass({displayName: "Login",
   render: function() {
     return (
         React.createElement("div", {id: "login"}, 
-        React.createElement("p", null, " This is the LOGIN react component"), 
+          React.createElement("p", null, " This is the LOGIN react component"), 
+          React.createElement("p", null, " You are logged in as: ", { }, " "), 
 
-        React.createElement("p", null, " You are logged in as: ", { }, " "), 
-
-        React.createElement("form", {action: "login", method: "post"}, 
-          React.createElement("div", null, 
-            React.createElement("label", {for: "username"}, "Email: ", { }, " "), 
-            React.createElement("input", {type: "text", name: "username", id: "username"})
-          ), 
+          React.createElement(TextField, {hintText: "email", floatingLabelText: "email"}), 
+          React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
           
-          React.createElement("div", null, 
-            React.createElement("label", {for: "password"}, "Password:"), 
-            React.createElement("input", {type: "password", name: "password", id: "password"})
-          ), 
-        
-          React.createElement("div", null, 
-            React.createElement("input", {type: "submit", value: "Log in"})
-          )
         )
-
-      )
     );
   }
 });
@@ -28564,32 +28551,12 @@ var Signup = React.createClass({displayName: "Signup",
   render: function() {
     return (
         React.createElement("div", {id: "signup"}, 
-        React.createElement("p", null, " This is the SIGNUP react component"), 
-
-        React.createElement("form", {action: "login", method: "post"}, 
-          
-
-
-          React.createElement("div", null, 
-            React.createElement("label", {for: "username"}, "Email:"), 
-            React.createElement("input", {type: "text", name: "username", id: "username"})
-          ), 
-          
-          React.createElement("div", null, 
-            React.createElement("label", {for: "password"}, "Password:"), 
-            React.createElement("input", {type: "password", name: "password", id: "password"})
-          ), 
-        
-          React.createElement("div", null, 
-            React.createElement("input", {type: "submit", value: "Sign Up"})
-          )
-
-
-
+          React.createElement("p", null, " This is the SIGNUP react component"), 
+                  
+          React.createElement(TextField, {hintText: "cell phone ", floatingLabelText: "cell phone"}), 
+          React.createElement(TextField, {hintText: "email", floatingLabelText: "email"}), 
+          React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
         )
-
-
-      )
     );
   }
 });

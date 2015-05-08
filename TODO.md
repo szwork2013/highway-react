@@ -18,3 +18,7 @@
 
 - redis session storage?
 
+- move passport auth work into root app.js
+
+- move routes into routes/index
+

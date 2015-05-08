@@ -20,7 +20,6 @@ var dbConfig = {
 
 /**
  * Connect to RethinkDB instance and perform a basic database setup:
- *
  * - create the `RDB_DB` database (defaults to `highway`)
  * - create tables `messages`, `cache`, `users` in this database
  */
