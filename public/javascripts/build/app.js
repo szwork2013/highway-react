@@ -22,7 +22,7 @@ React.render(
 );
 
 
-},{"./Main.jsx":253,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
+},{"./Main.jsx":255,"material-ui":3,"react":248,"react-tap-event-plugin":75}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -28317,6 +28317,94 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":106}],249:[function(require,module,exports){
+var React = require('react')
+  , mui = require('material-ui')
+  , TextField = mui.TextField;
+
+var Contact = React.createClass({displayName: "Contact",
+	render: function (){
+		return (
+		  
+		    React.createElement("a", {href: "#", className: "list-group-item"}, 
+            React.createElement("h2", {className: "list-group-item-heading listing-company"}, 
+              React.createElement("span", {className: "listing-position-name"}, " Opportunity: ",  this.props.position), 
+              React.createElement("small", {className: "listing-company-name"}, " Company: ",  this.props.company), 
+              React.createElement("small", {className: "listing-location"}, " Location: ",  this.props.local)
+            ), 
+
+          React.createElement("p", {className: "list-group-item-text"}, 
+            React.createElement("span", {className: "listing-job-type"}, "Looking for: ",  this.props.lookingFor)
+          ), 
+          
+          React.createElement("p", {className: "list-group-item-text"}, 
+            React.createElement("span", {className: "listing-posted"}, "Posted: ",  this.props.postedDate), 
+            React.createElement("span", {className: "listing-company-category"},  this.props.category)
+          )
+        )
+    );
+  }
+});
+
+module.exports = Contact;
+
+},{"material-ui":3,"react":248}],250:[function(require,module,exports){
+var React = require('react')
+  , Contact = require('./Contact.jsx')
+  , mui = require('material-ui')
+  , TextField = mui.TextField;
+
+var Contacts = React.createClass({displayName: "Contacts",
+
+     getInitialState: function() {
+        return {
+            data: [
+                {
+                    company: 'CommonHealth ACTION',
+                    position: 'Software Engineering',
+                    local: 'Washington, DC, USA',
+                    lookingFor: 'Node, Express, React, Redis, Rethink',
+                    postedDate: '12th  May 2015',
+                    description: 'cool job',
+                    category: 'Engineering'
+                },
+                {
+                    company: 'Institute Public Health Innovation',
+                    position: 'Network Admin',
+                    local: 'Washington, DC, USA',
+                    lookingFor: 'Windows, VPN, DHCP, Firewalls, Routers, Switches, Ports',
+                    postedDate: '12th May 2015',
+                    description: 'cool job',
+                    category: 'Engineering'
+                }
+            ]
+        };
+    },
+
+    render: function(){
+      return (
+        React.createElement("div", {id: "contacts-container"}, " ", this.state.data.map(function(contact){
+          return (
+            React.createElement(Contact, {
+              company: contact.company, 
+               position: contact.position, 
+                local: contact.local, 
+                 lookingFor: contact.lookingFor, 
+                  postedDate: contact.postedDate, description: contact.description, 
+                   category: contact.category}
+            )
+                    )
+                })
+            
+            )
+        )
+      }
+  });
+
+
+module.exports = Contacts;
+
+
+},{"./Contact.jsx":249,"material-ui":3,"react":248}],251:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react'),
     mui = require('material-ui'),
@@ -28372,7 +28460,7 @@ var React = require('react'),
 module.exports = Content;
 
 
-},{"material-ui":3,"react":248}],250:[function(require,module,exports){
+},{"material-ui":3,"react":248}],252:[function(require,module,exports){
 var React = require('react');
 var mui = require('material-ui');
 
@@ -28393,7 +28481,7 @@ var Footer = React.createClass({displayName: "Footer",
 module.exports = Footer;
 
 
-},{"material-ui":3,"react":248}],251:[function(require,module,exports){
+},{"material-ui":3,"react":248}],253:[function(require,module,exports){
 var React = require('react'),
     mui = require('material-ui'),
     FlatButton = mui.FlatButton,
@@ -28437,7 +28525,7 @@ var Hamburger = React.createClass({displayName: "Hamburger",
 module.exports = Hamburger;
 
 
-},{"material-ui":3,"react":248}],252:[function(require,module,exports){
+},{"material-ui":3,"react":248}],254:[function(require,module,exports){
 var React = require('react')
   , mui = require('material-ui')
   , TextField = mui.TextField;
@@ -28446,14 +28534,23 @@ var React = require('react')
 var Login = React.createClass({displayName: "Login",
 
   render: function() {
-    return (
-        React.createElement("div", {id: "login"}, 
-          React.createElement("p", null, " This is the LOGIN react component"), 
-          React.createElement("p", null, " You are logged in as: ", { }, " "), 
+    
 
-          React.createElement(TextField, {hintText: "email", floatingLabelText: "email"}), 
-          React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
+    return (
+        React.createElement("div", {id: "login-container"}, 
+          React.createElement("div", {className: "login-email"}, 
+            React.createElement(TextField, {hintText: "email", floatingLabelText: "email"})
+          ), 
+
+          React.createElement("div", {className: "login-password"}, 
+            React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
+          ), 
+
+
           
+          React.createElement("div", {className: "forgot-password"}, 
+            React.createElement("p", null, " Did you forget your password again?!  You are logged in as: ", { })
+          )
         )
     );
   }
@@ -28461,15 +28558,16 @@ var Login = React.createClass({displayName: "Login",
 
 module.exports = Login;
 
-},{"material-ui":3,"react":248}],253:[function(require,module,exports){
-/** In this file, we create a React component which incorporates components provided by material-ui */
+},{"material-ui":3,"react":248}],255:[function(require,module,exports){
+/** We create our React entry-point component, it incorporates all other react components */
 var React = require('react');
 var mui = require('material-ui');
 
 /** Declare all components here **/
 var Navigation = require('./Navigation.jsx');
-var Login = require('./Login.jsx');
 var Signup = require('./Signup.jsx');
+var Login = require('./Login.jsx');
+var Contacts = require('./Contacts.jsx');
 var Content = require('./Content.jsx');
 var Footer = require('./Footer.jsx');
 
@@ -28487,8 +28585,10 @@ var Main = React.createClass({displayName: "Main",
         React.createElement(Navigation, null), 
         React.createElement(Signup, null), 
         React.createElement(Login, null), 
+        React.createElement(Contacts, null), 
         React.createElement(Content, null), 
         React.createElement(Footer, null)
+
       )
     );
   }
@@ -28497,7 +28597,7 @@ var Main = React.createClass({displayName: "Main",
 module.exports = Main;
 
 
-},{"./Content.jsx":249,"./Footer.jsx":250,"./Login.jsx":252,"./Navigation.jsx":254,"./Signup.jsx":255,"material-ui":3,"react":248}],254:[function(require,module,exports){
+},{"./Contacts.jsx":250,"./Content.jsx":251,"./Footer.jsx":252,"./Login.jsx":254,"./Navigation.jsx":256,"./Signup.jsx":257,"material-ui":3,"react":248}],256:[function(require,module,exports){
 /** In this file, we create a React component which incorporates components provided by material-ui */
 var React = require('react'),
     mui = require('material-ui'),
@@ -28539,7 +28639,7 @@ var Hamburger = require('./Hamburger.jsx');
 module.exports = Navigation;
 
 
-},{"./Hamburger.jsx":251,"material-ui":3,"react":248}],255:[function(require,module,exports){
+},{"./Hamburger.jsx":253,"material-ui":3,"react":248}],257:[function(require,module,exports){
 var React = require('react')
   , mui = require('material-ui')
   , TextField = mui.TextField;
@@ -28550,12 +28650,20 @@ var Signup = React.createClass({displayName: "Signup",
 
   render: function() {
     return (
-        React.createElement("div", {id: "signup"}, 
-          React.createElement("p", null, " This is the SIGNUP react component"), 
-                  
-          React.createElement(TextField, {hintText: "cell phone ", floatingLabelText: "cell phone"}), 
-          React.createElement(TextField, {hintText: "email", floatingLabelText: "email"}), 
-          React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
+        React.createElement("div", {id: "signup-container"}, 
+          React.createElement("div", {className: "signup-phone"}, 
+            React.createElement(TextField, {hintText: "cell phone ", floatingLabelText: "cell phone"})
+          ), 
+          
+          React.createElement("div", {className: "signup-email"}, 
+            React.createElement(TextField, {hintText: "email", floatingLabelText: "email"})
+          ), 
+          React.createElement("div", {className: "signup-password"}, 
+            React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
+          )
+          
+          
+
         )
     );
   }

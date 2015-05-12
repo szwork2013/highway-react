@@ -6,14 +6,23 @@ var React = require('react')
 var Login = React.createClass({
 
   render: function() {
-    return (
-        <div id="login">
-          <p> This is the LOGIN react component</p>
-          <p> You are logged in as: {{ }} </p>
+    
 
-          <TextField hintText="email" floatingLabelText="email" />
-          <TextField hintText="password" floatingLabelText="Password" />
+    return (
+        <div id="login-container">
+          <div className ="login-email">
+            <TextField hintText="email" floatingLabelText="email" />
+          </div>
+
+          <div className ="login-password">
+            <TextField hintText="password" floatingLabelText="Password" />
+          </div>
+
+
           
+          <div className="forgot-password">
+            <p> Did you forget your password again?!  You are logged in as: {{ }}</p>
+          </div>
         </div>
     );
   }

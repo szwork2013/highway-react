@@ -37,3 +37,62 @@ r.connect({ host: 'localhost', port: 28015}, function (err, conn) {
 });
 
 module.exports = db;
+
+
+/*
+var React = require('react')
+  , mui = require('material-ui')
+  , TextField = mui.TextField;
+
+var Message = React.createClass({
+
+  getInitialState: function (){
+    return {value: ''};
+  },
+
+  handleChange: function(){
+    this.setState({ value: event.target.value});
+  },
+
+  handleSubmit: function(e){
+    e.preventDefault();
+
+    var text = this.state.value;
+    console.log('This is the message value' + text);
+    this.props.socket.emit('message', {
+      message: text,
+      userName: userName
+    });
+
+    this.state.value = '';
+  },
+*/
+
+/*
+  render: function() {
+    var value = this.state.value;
+
+    return (
+        <div id ="message-container">
+        <form id="message-form" >
+          <input type='submit' className="message-button" onSubmit={this.handleSubmit} />
+          <input type='text' className="form-control" value={value} onChange={this.handleChange} placeholder='Your Message Here' />
+        </form>
+
+        <TextField hintText="Hint Text" floatingLabelText="Floating Label Text"
+         valueLink={this.value} onSubmit={this.handleSubmit} />
+        </div>
+    );
+  }
+});
+
+module.exports = Message;
+
+*/
+
+#message-container{
+  width: 75%;
+  height: 100px;
+  background: orange;
+  margin: auto;
+}

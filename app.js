@@ -5,19 +5,24 @@ var express = require('express')
   , logger = require('morgan')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
+  , config = require('config')
   , passport = require('passport')
   , local = require('passport-local').Strategy
+  , GitHubStrategy = require('passport-github').Strategy
+  , TwitterStrategy = require('passport-twitter').Strategy
   , bcrypt = require ('bcrypt')
   , secrets = require('./config/secrets')
   , util = require('util')
   , session = require('express-session')
+  , redis = require('redis')
+  , client = redis.createClient()
+  , RedisStore = require('connect-redis')(session)
   , r = require('rethinkdb');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var login = require('./routes/login');
 
+var routes = require('./routes/index');
 var app = express();
+
 
 // db config
 var db = require('./config/database');
@@ -27,45 +32,40 @@ db.setup();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false, 
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser('cookie-secret'));
+/*app.use(session({ secret: 'secret', resave: false, saveUninitialized: false, 
                   cookie: {secure: true} 
 }));
-
+*/
+app.use(session({
+  secret: "redis-secret", 
+  resave: true,
+  saveUninitialized: true,
+  store : new RedisStore({ 
+    host : 'redis://redistogo:9d54b42583fe351e819913094b8bf708@grideye.redistogo.com', 
+    port : '9284', 
+    user : '', 
+    pass : 'redistogo-password' 
+  }),
+  cookie : {
+    maxAge : 604800 // one week, 604800 seconds
+  }
+}));
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 // app.use(flash());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 
-// passport config
-passport.use(new local(
-  function(username, password, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      var validateUser = function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, {message: 'Unknown user: ' + username})}
-
-        if (bcrypt.compareSync(password, user.password)) {
-          return done(null, user);
-        }
-        else {
-          return done(null, false, {message: 'Invalid username or password'});
-        }
-      };
-
-      db.findUserByEmail(username, validateUser);
-    });
-  }
-));
-
+/*
+/* passport config
+*/
 passport.serializeUser(function(user, done) {
   console.log("[DEBUG][passport][serializeUser] %j", user);
   done(null, user.id);
@@ -136,16 +136,35 @@ function validateEmail(email) {
 }
 
 
+passport.use(new local(
+    function(username, password, done) {
+      // asynchronous verification, for effect...
+      process.nextTick(function () {
+        var validateUser = function (err, user) {
+          if (err) { return done(err); }
+          if (!user) { return done(null, false, {message: 'Unknown user: ' + username})}
+
+          if (bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+          }
+          else {
+            return done(null, false, {message: 'Invalid username or password'});
+          }
+        };
+
+        db.findUserByEmail(username, validateUser);
+      });
+    }
+  ));
 
 /*
 ** Routes
 */
-
 app.use('/', routes);
-// app.get('/users', routes.users);
-// app.get('/login', routes.login);
 
-
+/*
+** Signup
+*/
 app.post('/signup', function(req, res){
   if (typeof req.user !== 'undefined') {
     // User is logged in.
@@ -179,7 +198,7 @@ app.post('/signup', function(req, res){
         return
       }
       if(saved) {
-        console.log("[DEBUG][/signup][saveUser] /chat");
+        console.log("[DEBUG][/signup][saveUser] /contacts");
         res.redirect('/contacts');
       }
       else {
@@ -193,7 +212,9 @@ app.post('/signup', function(req, res){
 });
 
 
-
+/*
+** Login
+*/
 app.get('/login', function (req, res) {
   if (typeof req.user !== 'undefined') {
     // User is logged in.
@@ -209,6 +230,7 @@ app.get('/login', function (req, res) {
   res.render('login', { title: 'Login', message: message, user: req.user });
 });
 
+
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
@@ -217,6 +239,29 @@ app.post('/login',
 );
 
 
+/*
+** Account
+*/
+app.get('/account', ensureAuthenticated, function(req, res) {
+  res.render('account', { user: req.user, title: 'My account' });
+});
+
+
+/*
+** Contacts
+*/
+app.get('/contacts', ensureAuthenticated, function(req, res){
+  res.render('contacts', { user: req.user, title: 'Contacts' });
+});
+
+
+/*
+** Logout
+*/
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 /*
 ** Error Handlers
@@ -229,7 +274,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handlers
 
 // development error handler
 // will print stacktrace

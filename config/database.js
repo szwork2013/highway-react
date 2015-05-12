@@ -14,7 +14,18 @@ var dbConfig = {
     'messages': 'id',
     'cache': 'cid',
     'users': 'id',
-    'contacts': 'id'
+    'contacts': 'id',
+    'roles': ['id',
+              'superuser',
+              'admin',
+              'user-basic',
+              'user-pro',
+              'user-exec',
+              'user-business',
+              'business-basic',
+              'business-pro',
+              'business-exec'
+        ]
   }
 };
 

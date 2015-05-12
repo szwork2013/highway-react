@@ -8,12 +8,20 @@ var Signup = React.createClass({
 
   render: function() {
     return (
-        <div id="signup">
-          <p> This is the SIGNUP react component</p>
-                  
-          <TextField hintText="cell phone " floatingLabelText="cell phone" />
-          <TextField hintText="email" floatingLabelText="email" />
-          <TextField hintText="password" floatingLabelText="Password" />
+        <div id="signup-container">
+          <div className ="signup-phone">
+            <TextField hintText="cell phone " floatingLabelText="cell phone" />
+          </div>
+          
+          <div className ="signup-email">
+            <TextField hintText="email" floatingLabelText="email" />
+          </div>
+          <div className ="signup-password">
+            <TextField hintText="password" floatingLabelText="Password" />
+          </div>
+          
+          
+
         </div>
     );
   }
