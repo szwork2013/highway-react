@@ -11,13 +11,13 @@ var dbConfig = {
   port: parseInt(process.env.RDB_PORT) || 28015,
   db  : process.env.RDB_DB || 'highway',
   tables: {
-    'messages': 'id',
-    'cache': 'cid',
-    'users': 'id',
+    'users': { 
+      'id': 'req.params.id',
+      'username': 'req.params.username',
+      'email': 'req.params.email'
+  },
     'contacts': 'id',
-    'roles': ['id',
-              'superuser',
-              'admin',
+    'roles': [
               'user-basic',
               'user-pro',
               'user-exec',

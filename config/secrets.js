@@ -1,6 +1,6 @@
 module.exports = {
 
-	sessionSecret: process.env.SESSION_SECRET || 'session-secret',
+	sessionSecret: process.env.SESSION_SECRET || 'redis-secret',
 
 	github: {
     clientID: process.env.GITHUB_ID || '',

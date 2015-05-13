@@ -6,13 +6,13 @@ var express = require('express')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
   , config = require('config')
+  , bcrypt = require ('bcrypt')
+  , secrets = require('./config/secrets')
+  , util = require('util')
   , passport = require('passport')
   , local = require('passport-local').Strategy
   , GitHubStrategy = require('passport-github').Strategy
   , TwitterStrategy = require('passport-twitter').Strategy
-  , bcrypt = require ('bcrypt')
-  , secrets = require('./config/secrets')
-  , util = require('util')
   , session = require('express-session')
   , redis = require('redis')
   , client = redis.createClient()
@@ -28,39 +28,39 @@ var app = express();
 var db = require('./config/database');
 db.setup();
 
-// view engine setup
+ client.on("error", function (err) {
+        console.log("Error " + err);
+    });
+
+// view engine setup and express middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser('cookie-secret'));
-/*app.use(session({ secret: 'secret', resave: false, saveUninitialized: false, 
-                  cookie: {secure: true} 
-}));
-*/
+
+app.use(cookieParser('redis-secret'));
 app.use(session({
   secret: "redis-secret", 
-  resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  resave: false,
   store : new RedisStore({ 
-    host : 'redis://redistogo:9d54b42583fe351e819913094b8bf708@grideye.redistogo.com', 
-    port : '9284', 
+    host : 'localhost', 
+    port : '6379', 
     user : '', 
-    pass : 'redistogo-password' 
-  }),
+    // pass : 'redistogo-password' only, redis-server does not require
+  }), // redis://redistogo:9d54b42583fe351e819913094b8bf708@grideye.redistogo.com redis host, port '9284' 
   cookie : {
+    secure: true,
     maxAge : 604800 // one week, 604800 seconds
   }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(flash());
+app.use(flash());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
-// app.use(express.static(path.join(__dirname, 'public')));
 
 
 /*
@@ -125,12 +125,12 @@ passport.checkIfLoggedIn = function (req, res, next) {
 };
 
 
-function ensureAuthenticated(req, res, next) {
+passport.ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
 
-function validateEmail(email) {
+passport.validateEmail= function (email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
 }
@@ -157,111 +157,12 @@ passport.use(new local(
     }
   ));
 
+
 /*
 ** Routes
 */
 app.use('/', routes);
 
-/*
-** Signup
-*/
-app.post('/signup', function(req, res){
-  if (typeof req.user !== 'undefined') {
-    // User is logged in.
-    res.redirect('/account');
-    return;
-  }
-  if (!validateEmail(req.param('email'))) {
-    // Probably not a good email address.
-    req.flash('error', 'Not a valid email address!')
-    res.redirect('/signup');
-    return;
-  }
-  if (req.param('password') !== req.param('password2')) {
-    // 2 different passwords!
-    req.flash('error', 'Passwords does not match!')
-    res.redirect('/signup');
-    return;
-  }
-
-  // Saving the new user to DB
-  db.saveUser({
-      username: req.param('username'),
-      mail: req.param('email'),
-      password: bcrypt.hashSync(req.param('password'), 8)
-    },
-    function(err, saved) {
-      console.log("[DEBUG][/signup][saveUser] %s", saved);
-      if(err) {
-        req.flash('error', 'There was an error creating the account. Please try again later');
-        res.redirect('/signup');
-        return
-      }
-      if(saved) {
-        console.log("[DEBUG][/signup][saveUser] /contacts");
-        res.redirect('/contacts');
-      }
-      else {
-        req.flash('error', 'The account wasn\'t created');
-        res.redirect('/signup');
-        console.log("[DEBUG][/signup][saveUser] /signup");
-      }
-      return      
-    }
-  );
-});
-
-
-/*
-** Login
-*/
-app.get('/login', function (req, res) {
-  if (typeof req.user !== 'undefined') {
-    // User is logged in.
-    res.redirect('/chat');
-  }
-  else {
-    req.user = false;
-  }
-  var message = req.flash('error');
-  if (message.length < 1) {
-    message = false;
-  }
-  res.render('login', { title: 'Login', message: message, user: req.user });
-});
-
-
-app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
-    res.redirect('/contacts');
-  }
-);
-
-
-/*
-** Account
-*/
-app.get('/account', ensureAuthenticated, function(req, res) {
-  res.render('account', { user: req.user, title: 'My account' });
-});
-
-
-/*
-** Contacts
-*/
-app.get('/contacts', ensureAuthenticated, function(req, res){
-  res.render('contacts', { user: req.user, title: 'Contacts' });
-});
-
-
-/*
-** Logout
-*/
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
 
 /*
 ** Error Handlers
