@@ -1,6 +1,8 @@
 var React = require('react')
   , mui = require('material-ui')
-  , TextField = mui.TextField;
+  , TextField = mui.TextField
+  , FlatButton = mui.FlatButton
+  , FontIcon = mui.FontIcon;
 
 
 var Login = React.createClass({
@@ -23,6 +25,14 @@ var Login = React.createClass({
           <div className="forgot-password">
             <p> Did you forget your password again?!  You are logged in as: {{ }}</p>
           </div>
+
+          <div className="login-button-container">
+            <FlatButton linkButton={true} href="/login" secondary={true}>
+              <FontIcon className="muidocs-icon-custom-github"/>
+                <span className="mui-flat-button-label">Login</span>
+            </FlatButton>
+          </div>
+
         </div>
     );
   }

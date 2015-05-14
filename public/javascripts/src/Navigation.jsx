@@ -13,7 +13,14 @@ var React = require('react'),
 /** Declare all components here **/
 var Hamburger = require('./Hamburger.jsx');
 
+
   var Navigation = React.createClass({
+
+    getInitialState: function() {
+    return {
+      
+    };
+  },
 
   render: function() {
     return (
@@ -25,15 +32,14 @@ var Hamburger = require('./Hamburger.jsx');
           </ToolbarGroup>
 
           <ToolbarGroup key={1} float="right">
-            <RaisedButton label="sign up" primary={true} onTouchTap={this._handleTouchTap} />
-            <RaisedButton label="log in" primary={true} onTouchTap={this._handleTouchTap} />
+            <RaisedButton label="signup" primary={true} linkButton={true} href="/signup" onTouchTap={this._handleSignupTouchTap} />
+            <RaisedButton label="login" primary={true} linkButton={true} href="/login" onTouchTap={this._handleLoginTouchTap} />
 
           </ToolbarGroup>
         </Toolbar>
       </div>
     );
   }
-
 });
 
 module.exports = Navigation;

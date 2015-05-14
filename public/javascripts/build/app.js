@@ -28528,7 +28528,9 @@ module.exports = Hamburger;
 },{"material-ui":3,"react":248}],254:[function(require,module,exports){
 var React = require('react')
   , mui = require('material-ui')
-  , TextField = mui.TextField;
+  , TextField = mui.TextField
+  , FlatButton = mui.FlatButton
+  , FontIcon = mui.FontIcon;
 
 
 var Login = React.createClass({displayName: "Login",
@@ -28550,7 +28552,15 @@ var Login = React.createClass({displayName: "Login",
           
           React.createElement("div", {className: "forgot-password"}, 
             React.createElement("p", null, " Did you forget your password again?!  You are logged in as: ", { })
+          ), 
+
+          React.createElement("div", {className: "login-button-container"}, 
+            React.createElement(FlatButton, {linkButton: true, href: "/login", secondary: true}, 
+              React.createElement(FontIcon, {className: "muidocs-icon-custom-github"}), 
+                React.createElement("span", {className: "mui-flat-button-label"}, "Login")
+            )
           )
+
         )
     );
   }
@@ -28613,7 +28623,14 @@ var React = require('react'),
 /** Declare all components here **/
 var Hamburger = require('./Hamburger.jsx');
 
+
   var Navigation = React.createClass({displayName: "Navigation",
+
+    getInitialState: function() {
+    return {
+      
+    };
+  },
 
   render: function() {
     return (
@@ -28625,15 +28642,14 @@ var Hamburger = require('./Hamburger.jsx');
           ), 
 
           React.createElement(ToolbarGroup, {key: 1, float: "right"}, 
-            React.createElement(RaisedButton, {label: "sign up", primary: true, onTouchTap: this._handleTouchTap}), 
-            React.createElement(RaisedButton, {label: "log in", primary: true, onTouchTap: this._handleTouchTap})
+            React.createElement(RaisedButton, {label: "signup", primary: true, linkButton: true, href: "/signup", onTouchTap: this._handleSignupTouchTap}), 
+            React.createElement(RaisedButton, {label: "login", primary: true, linkButton: true, href: "/login", onTouchTap: this._handleLoginTouchTap})
 
           )
         )
       )
     );
   }
-
 });
 
 module.exports = Navigation;
@@ -28642,7 +28658,10 @@ module.exports = Navigation;
 },{"./Hamburger.jsx":253,"material-ui":3,"react":248}],257:[function(require,module,exports){
 var React = require('react')
   , mui = require('material-ui')
-  , TextField = mui.TextField;
+  , TextField = mui.TextField
+  , FlatButton = mui.FlatButton
+  , FontIcon = mui.FontIcon;
+
 
 
 
@@ -28660,9 +28679,14 @@ var Signup = React.createClass({displayName: "Signup",
           ), 
           React.createElement("div", {className: "signup-password"}, 
             React.createElement(TextField, {hintText: "password", floatingLabelText: "Password"})
+          ), 
+
+          React.createElement("div", {className: "signup-button-container"}, 
+            React.createElement(FlatButton, {linkButton: true, href: "/signup", secondary: true}, 
+              React.createElement(FontIcon, {className: "muidocs-icon-custom-github"}), 
+                React.createElement("span", {className: "mui-flat-button-label"}, "Signup")
+            )
           )
-          
-          
 
         )
     );

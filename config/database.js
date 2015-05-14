@@ -11,7 +11,7 @@ var dbConfig = {
   port: parseInt(process.env.RDB_PORT) || 28015,
   db  : process.env.RDB_DB || 'highway',
   tables: {
-    'users': { 
+    'users': {
       'id': 'req.params.id',
       'username': 'req.params.username',
       'email': 'req.params.email'
@@ -26,13 +26,13 @@ var dbConfig = {
               'business-pro',
               'business-exec'
         ]
-  }
+    }
 };
 
 /**
  * Connect to RethinkDB instance and perform a basic database setup:
  * - create the `RDB_DB` database (defaults to `highway`)
- * - create tables `messages`, `cache`, `users` in this database
+ * - create tables `users`, 'contacts' in this database
  */
 module.exports.setup = function() {
   r.connect({host: dbConfig.host, port: dbConfig.port }, function (err, connection) {

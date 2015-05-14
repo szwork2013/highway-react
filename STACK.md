@@ -96,3 +96,52 @@ module.exports = Message;
   background: orange;
   margin: auto;
 }
+
+
+/*
+var loginCallbackHandler = function (objectMapper, type) {
+  return function (accessToken, refreshToken, profile, done) {
+    if (accessToken !== null) {
+      r
+        .table('users')
+        .getAll(profile.username, { index: 'login' })
+        .filter({ type: type })
+        .run(r.conn)
+        .then(function (cursor) {
+          return cursor.toArray()
+            .then(function (users) {
+              if (users.length > 0) {
+                return done(null, users[0]);
+              }
+              return r.table('users')
+                .insert(objectMapper(profile))
+                .run(r.conn)
+                .then(function (response) {
+                  return r.table('users')
+                    .get(response.generated_keys[0])
+                    .run(r.conn);
+                })
+                .then(function (newUser) {
+                  done(null, newUser);
+                });
+            });
+        })
+        .catch(function (err) {
+          console.log('Error Getting User', err);
+        });
+    }
+  };
+};
+*/
+
+
+
+
+
+    <div class="login-email"></div>
+    <div class="login-password"></div>
+    <div class="forgot-pasword"></div>
+    <div class="login-button-container"></div>
+
+
+    

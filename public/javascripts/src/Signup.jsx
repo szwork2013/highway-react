@@ -1,6 +1,9 @@
 var React = require('react')
   , mui = require('material-ui')
-  , TextField = mui.TextField;
+  , TextField = mui.TextField
+  , FlatButton = mui.FlatButton
+  , FontIcon = mui.FontIcon;
+
 
 
 
@@ -19,8 +22,13 @@ var Signup = React.createClass({
           <div className ="signup-password">
             <TextField hintText="password" floatingLabelText="Password" />
           </div>
-          
-          
+
+          <div className="signup-button-container">
+            <FlatButton linkButton={true} href="/signup" secondary={true}>
+              <FontIcon className="muidocs-icon-custom-github"/>
+                <span className="mui-flat-button-label">Signup</span>
+            </FlatButton>
+          </div>
 
         </div>
     );

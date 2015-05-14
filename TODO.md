@@ -2,6 +2,8 @@
 
 - login, signup via passport
 
+- bower install bootstrap (use only grid system & media queries)
+
 - connect rethinkdb [done: accepts schema edits made from app.js]
 
 - create rethinkdb integration into routes
@@ -42,5 +44,5 @@
 
 - add token based auth : https://auth0.com/blog/2014/01/15/auth-with-socket-io/
 
-- 
+- resolve routing, all currently point to index view from routes/index.js
 

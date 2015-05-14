@@ -66,76 +66,6 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 /*
 /* passport config
 */
-passport.serializeUser(function(user, done) {
-  console.log("[DEBUG][passport][serializeUser] %j", user);
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  r
-    .table('users')
-    .get(id)
-    .run(r.conn)
-    .then(function (user){
-      done (null, user);
-    });
-  });
-
-
-var loginCallbackHandler = function (objectMapper, type) {
-  return function (accessToken, refreshToken, profile, done) {
-    if (accessToken !== null) {
-      r
-        .table('users')
-        .getAll(profile.username, { index: 'login' })
-        .filter({ type: type })
-        .run(r.conn)
-        .then(function (cursor) {
-          return cursor.toArray()
-            .then(function (users) {
-              if (users.length > 0) {
-                return done(null, users[0]);
-              }
-              return r.table('users')
-                .insert(objectMapper(profile))
-                .run(r.conn)
-                .then(function (response) {
-                  return r.table('users')
-                    .get(response.generated_keys[0])
-                    .run(r.conn);
-                })
-                .then(function (newUser) {
-                  done(null, newUser);
-                });
-            });
-        })
-        .catch(function (err) {
-          console.log('Error Getting User', err);
-        });
-    }
-  };
-};
-
-
-passport.checkIfLoggedIn = function (req, res, next) {
-  if (req.user) {
-    return next();
-  }
-  return res.status(401).send('You\'re not logged in');
-};
-
-
-passport.ensureAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
-
-passport.validateEmail= function (email) {
-  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
-}
-
-
 passport.use(new local(
     function(username, password, done) {
       // asynchronous verification, for effect...
@@ -156,6 +86,17 @@ passport.use(new local(
       });
     }
   ));
+
+
+passport.serializeUser(function(user, done) {
+  console.log("[DEBUG][passport][serializeUser] %j", user);
+  done(null, user.id);
+});
+
+
+passport.deserializeUser(function (id, done) {
+  db.findUserById(id, done);
+});
 
 
 /*
